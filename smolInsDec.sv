@@ -25,7 +25,7 @@ module smolInsDec(
 
   //inmediates
 
-  output logic [31:0] imm,
+  output logic [31:0] imm
 
   //control signals
 
@@ -49,61 +49,63 @@ module smolInsDec(
   // 2) Ins Type selection
   logic [2:0] optype;
   always_comb begin
-    assign optype = 3'b000;
+    optype = 3'b000;
     case (instr[6:2])
      
      (5'b00101 || 5'b01101): begin
-       assign optype = 3'b001; //U TYPE
+       optype = 3'b001; //U TYPE
      end
 
      (5'b00000 || 5'b00001 || 5'b00100 || 5'b00110 || 5'b11001): begin
-       assign optype = 3'b010; //I TYPE
+       optype = 3'b010; //I TYPE
      end
 
      (5'b01000 || 5'b01001): begin
-       assign optype = 3'b011; //S TYPE
+       optype = 3'b011; //S TYPE
      end
 
      (5'b01100 || 5'b01110 || 5'b01011 || 5'b10100): begin
-       assign optype = 3'b100; //R TYPE
+       optype = 3'b100; //R TYPE
      end
      
      (5'b11011): begin
-       assign optype = 3'b101; //J TYPE
+       optype = 3'b101; //J TYPE
      end
      
      (5'b11000): begin
-       assign optype = 3'b110; //B TYPE
+       optype = 3'b110; //B TYPE
      end
      default: begin
-       assign optype = 3'b111;
+       optype = 3'b111;
      end
     endcase  
+  end
      
   always_comb begin 
-    assign imm = 32'h0000_0000;
+    imm = 32'h0000_0000;
 
-    case (optype):
+    case (optype)
      3'b001: begin
-       assign imm = {instr[31:12],1'b0}; //U IMMEDIATE
+       imm = {instr[31:12],1'b0}; //U IMMEDIATE
      end
      3'b010: begin
-       assign imm = {{20{instr[31]}}, instr[31:20]}; // I INMEDIATE
+       imm = {{20{instr[31]}}, instr[31:20]}; // I INMEDIATE
      end
      3'b011: begin
-       assign imm = {{20{instr[31]}},instr[31:25],instr[11:7]}; // S IMMEDIATE
+       imm = {{20{instr[31]}},instr[31:25],instr[11:7]}; // S IMMEDIATE
      end
      3'b101: begin
-       assign imm = {{11{instr[31]}},instr[19,12],instr[20],instr[30:21],1'b0}; //J IMMEDIATE
+       imm = {{11{instr[31]}},instr[19:12],instr[20],instr[30:21],1'b0}; //J IMMEDIATE
      end
 
      3'b110: begin
-       assign imm = {{20{instr[31]}},instr[7],instr[30:25],instr[11:8],1'b0}
+       imm = {{20{instr[31]}},instr[7],instr[30:25],instr[11:8],1'b0};
      end
-     default begin:
-       assign imm = 32'h0000_0000
+     default: begin
+       imm = 32'h0000_0000;
      end
     endcase
+   end
 /*
   // 2) Immediate generation
   // I‑type: bits [31:20]
