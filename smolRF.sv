@@ -26,16 +26,10 @@ logic [31:0] registerFile [0:31];
 //ALWAYS 0 reg x0
 assign registerFile[5'd0] = 32'h0000_0000;
 
-//SYNCRONOUS READ PROT
+//ASYNCRONOUS READ PROT
 
-always_ff @(posedge clk) begin
-    if (rEnable1 && rEnable2) begin
-        rData1 <= registerFile[rAddr1];
-        rData2 <= registerFile[rAddr2];
-    end else if (rEnable1) begin
-        rData1 <= registerFile[rAddr1];
-    end
-end
+assign rData1 = rEnable1 ? registerFile[rAddr1] : 32'd0;
+assign rData2 = rEnable2 ? registerFile[rAddr2] : 32'd0;
 
 //SYNCRONOUS WRITE PORT
 
