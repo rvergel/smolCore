@@ -21,7 +21,6 @@ module smolInsDec(
     output logic [2:0] funct3,
     output logic [4:0] rs1,
     output logic [4:0] rs2,
-    output logic [4:0] shamt,
     output logic funct7,
 
     //inmediates
@@ -84,7 +83,6 @@ end
 // IMMEDIATE GENERATOR + SHAMT GENERATOR IF I INSTRCTION                                                                                                                          
 always_comb begin 
 imm = 32'h0000_0000;
-shamt = 5'h0;
 
 case (optype)
     3'b001: begin
@@ -92,7 +90,6 @@ case (optype)
 end
 3'b010: begin
 imm = {{20{instr[31]}}, instr[31:20]}; // I INMEDIATE
-shamt = ((instr[14:12] == 3'b001)||(instr[14:12]) == 3'b101)) ? instr[24:20] : 5'h0;
 end
 3'b011: begin
 imm = {{20{instr[31]}},instr[31:25],instr[11:7]}; // S IMMEDIATE
