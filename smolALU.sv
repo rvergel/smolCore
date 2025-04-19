@@ -1,10 +1,18 @@
+/*
+    Author: Ricardo Vergel
+    Description: ALU for SmolCore supporting all the operations
+    Date: April 18-2025
+
+    ****INSERT YOUR CHANGES BELOW****
+    Date: April 19-2025
+    Description: Added branch enable on alu_out LSB
+*/
 module smolALU(
     input logic [31:0] rs1,
     input logic [31:0] rs2_or_imm,
     input logic [4:0] pc,
     input logic [4:0] op_sel,
     output logic [31:0] alu_out,
-    output logic [31:0] jal_br_tgt_pc,
     output logic carry,
     output logic overflow
     
@@ -17,17 +25,17 @@ always_comb begin
     logic [32:0] sum_ext;
     logic signed [31:0] a_s, b_s, sum_s;
     logic [63:0] sra_aux;
-
+    
   // extend to capture carry
-    assign sum_ext = (aluOp == 4'h1) 
-                   ? ({1'b0, a} - {1'b0, b}) 
-                   : ({1'b0, a} + {1'b0, b});
+    sum_ext = (op_sel == 4'h1) 
+                   ? ({1'b0, rs1} - {1'b0, rs2_or_imm}) 
+                   : ({1'b0, rs1} + {1'b0, rs2_or_imm});
 
   // signed version for overflow detection
-    assign a_s    = a;
-    assign b_s    = (aluOp == 4'h1) ? -b : b;
-    assign sum_s  = a_s + b_s;
-    assign sra_aux = 64'd0;
+    a_s    = rs1;
+    b_s    = (op_sel == 4'h1) ? -rs2_or_imm : rs2_or_imm;
+    sum_s  = a_s + b_s;
+    sra_aux = 64'd0;
     case (op_sel)
         5'd0: begin
             alu_out = rs1 + rs2_or_imm; //add or addi
@@ -72,6 +80,25 @@ always_comb begin
         5'd13: begin
             alu_out = rs1 + rs2_or_imm; //load or store address
         end
+        5'd14: begin
+            alu_out[0] = rs1 == rs2_or_imm; //beq
+        end
+        5'd15: begin
+            alu_out[0] = rs1 != rs2_or_imm; //bne
+        end
+        5'd16: begin
+            alu_out[0] = (rs1 < rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]) ; //blt
+        end
+        5'd17: begin
+            alu_out[0] = (rs1 >= rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]); //bge
+        end
+        5'd18: begin
+            alu_out[0] = rs1 < rs2_or_imm; //bltu
+        end
+        5'd19: begin
+            alu_out[0] = rs1 >= rs2_or_imm; //bgeu
+        end
+         
         default: begin
             alu_out = 32'h0000_0000;
         end
