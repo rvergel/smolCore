@@ -14,4 +14,6 @@ module smolMemory(
     input logic [31:0] writeData,
     output logic [31:0] readData
 );
+
+logic [31:0] memory [0:31];
 endmodule
