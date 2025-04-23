@@ -6,6 +6,9 @@
     ****INSERT YOUR CHANGES BELOW****
     Date: April 19-2025
     Description: Added branch enable on alu_out LSB
+
+	Date: April 22-2025
+	Description: Modification for Branch, AUIPC, JAL operations logic.
 */
 module smolALU(
     input logic [31:0] rs1,
@@ -81,22 +84,22 @@ always_comb begin
             alu_out = rs1 + rs2_or_imm; //load or store address
         end
         5'd14: begin
-            alu_out[0] = rs1 == rs2_or_imm; //beq
+            alu_out = rs1 == rs2_or_imm ? pc + rs2_or_imm : 32'd0; //beq
         end
         5'd15: begin
-            alu_out[0] = rs1 != rs2_or_imm; //bne
+            alu_out = rs1 != rs2_or_im ? pc + rs2_or_imm : 32'd0; //bne
         end
         5'd16: begin
-            alu_out[0] = (rs1 < rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]) ; //blt
+            alu_out = (rs1 < rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]) ? pc + rs2_or_imm : 32'd0 ; //blt
         end
         5'd17: begin
-            alu_out[0] = (rs1 >= rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]); //bge
+            alu_out = (rs1 >= rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]) ? pc + rs2_or_imm : 32'd0; //bge
         end
         5'd18: begin
-            alu_out[0] = rs1 < rs2_or_imm; //bltu
+            alu_out = rs1 < rs2_or_imm ? pc + rs2_or_imm : 32'd0; //bltu
         end
         5'd19: begin
-            alu_out[0] = rs1 >= rs2_or_imm; //bgeu
+            alu_out = rs1 >= rs2_or_imm ? pc + rs2_or_imm; //bgeu
         end
          
         default: begin
