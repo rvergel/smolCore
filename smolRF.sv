@@ -4,8 +4,10 @@
     Date: April 19-2025
 
     ****COMMENT YOUR CHANGES BELOW****
+    Date: May 16-2025
+    Description: MOdified X0 assignment
 */
-module smolRF(
+module smolRF (
     input logic clk,
     input logic rst,
     input logic wEnable,
@@ -23,8 +25,6 @@ module smolRF(
 
 logic [31:0] registerFile [0:31];
 
-//ALWAYS 0 reg x0
-assign registerFile[5'd0] = 32'h0000_0000;
 
 //ASYNCRONOUS READ PROT
 
@@ -35,11 +35,11 @@ assign rData2 = rEnable2 ? registerFile[rAddr2] : 32'd0;
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        integer i;
-        for (i = 0; i < 32; i++)
+        for (int i = 0; i < 32; i++)
             registerFile[i] <= 32'h0000_0000;
-    end else if (wEnable && (wAddr != 5'd0)) begin
-        registerFile <= wData;
+    end else if (wEnable && wAddr != 5'd0) begin
+        registerFile[wAddr] <= wData;
     end
 end
+
 endmodule

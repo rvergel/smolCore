@@ -1,0 +1,79 @@
+$date
+	Sat May 17 13:37:17 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module NextPC_tb $end
+$var wire 32 ! nextPC [31:0] $end
+$var reg 32 " alu_out [31:0] $end
+$var reg 1 # br_auipc_enable $end
+$var reg 1 $ jal_enable $end
+$var reg 32 % pc [31:0] $end
+$var reg 32 & rs1 [31:0] $end
+$var reg 32 ' rs2_or_imm [31:0] $end
+$var reg 1 ( rst $end
+$scope module dut $end
+$var wire 32 ) alu_out [31:0] $end
+$var wire 1 # br_auipc_enable $end
+$var wire 1 $ jal_enable $end
+$var wire 32 * pc [31:0] $end
+$var wire 32 + rs1 [31:0] $end
+$var wire 32 , rs2_or_imm [31:0] $end
+$var wire 1 ( rst $end
+$var wire 32 - nextPC [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 -
+bx ,
+bx +
+bx *
+bx )
+1(
+bx '
+bx &
+bx %
+x$
+x#
+bx "
+b0 !
+$end
+#5000
+bx !
+bx -
+0(
+#10000
+b0 %
+b0 *
+#65000
+b1010 !
+b1010 -
+1#
+b1010 "
+b1010 )
+#75000
+bx !
+bx -
+0#
+#85000
+b1100 !
+b1100 -
+1$
+b1011 '
+b1011 ,
+b1 &
+b1 +
+#95000
+b100 !
+b100 -
+0$
+#500000

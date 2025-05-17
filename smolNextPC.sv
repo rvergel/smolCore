@@ -8,7 +8,7 @@
 	Date: April 22-2025
 	Description: Branch and AUIPC operations supported in ALU, Jal operation calculated locally
 */
-module nextPC(
+module smolNextPC(
     input logic [31:0] rs1,
     input logic [31:0] rs2_or_imm,
     input logic [31:0] pc,

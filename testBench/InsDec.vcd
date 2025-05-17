@@ -1,0 +1,120 @@
+$date
+	Sat May 17 15:26:44 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module InsDec_tb $end
+$var wire 5 ! rs2 [4:0] $end
+$var wire 5 " rs1 [4:0] $end
+$var wire 5 # rd [4:0] $end
+$var wire 7 $ opcode [6:0] $end
+$var wire 32 % imm [31:0] $end
+$var wire 7 & funct7 [6:0] $end
+$var wire 3 ' funct3 [2:0] $end
+$var reg 32 ( instr [31:0] $end
+$scope module dut $end
+$var wire 32 ) instr [31:0] $end
+$var wire 5 * rs2 [4:0] $end
+$var wire 5 + rs1 [4:0] $end
+$var wire 5 , rd [4:0] $end
+$var wire 7 - opcode [6:0] $end
+$var wire 7 . funct7 [6:0] $end
+$var wire 3 / funct3 [2:0] $end
+$var reg 32 0 imm [31:0] $end
+$var reg 3 1 optype [2:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b111 1
+b0 0
+b11 /
+b1010101 .
+b111011 -
+b10111 ,
+b10101 +
+b1010 *
+b10101010101010101011101110111011 )
+b10101010101010101011101110111011 (
+b11 '
+b1010101 &
+b0 %
+b111011 $
+b10111 #
+b10101 "
+b1010 !
+$end
+#10000
+b0 $
+b0 -
+b0 #
+b0 ,
+b0 '
+b0 /
+b0 "
+b0 +
+b0 !
+b0 *
+b0 &
+b0 .
+b0 (
+b0 )
+#20000
+b1 $
+b1 -
+b1 (
+b1 )
+#30000
+b1111000 $
+b1111000 -
+b1100 #
+b1100 ,
+b101 '
+b101 /
+b1000 "
+b1000 +
+b11 !
+b11 *
+b1001 &
+b1001 .
+b10010001101000101011001111000 (
+b10010001101000101011001111000 )
+#40000
+b101010 $
+b101010 -
+b10101 #
+b10101 ,
+b10 '
+b10 /
+b1 "
+b1 +
+b0 !
+b0 *
+b0 &
+b0 .
+b1010101010101010 (
+b1010101010101010 )
+#50000
+b1011101 $
+b1011101 -
+b11011 #
+b11011 ,
+b101 '
+b101 /
+b11011 "
+b11011 +
+b11101 !
+b11101 *
+b1101110 &
+b1101110 .
+b11011101110111011101110111011101 (
+b11011101110111011101110111011101 )
+#500000

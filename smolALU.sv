@@ -15,9 +15,9 @@ module smolALU(
     input logic [31:0] rs2_or_imm,
     input logic [4:0] pc,
     input logic [4:0] op_sel,
-    output logic [31:0] alu_out,
-    output logic carry,
-    output logic overflow
+    output logic [31:0] alu_out
+  //  output logic carry,
+  //  output logic overflow
     
 );
 
@@ -30,13 +30,13 @@ always_comb begin
     logic [63:0] sra_aux;
     
   // extend to capture carry
-    sum_ext = (op_sel == 4'h1) 
+    sum_ext = (op_sel == 5'd1) 
                    ? ({1'b0, rs1} - {1'b0, rs2_or_imm}) 
                    : ({1'b0, rs1} + {1'b0, rs2_or_imm});
 
   // signed version for overflow detection
     a_s    = rs1;
-    b_s    = (op_sel == 4'h1) ? -rs2_or_imm : rs2_or_imm;
+    b_s    = (op_sel == 5'd1) ? -rs2_or_imm : rs2_or_imm;
     sum_s  = a_s + b_s;
     sra_aux = 64'd0;
     case (op_sel)
