@@ -10,6 +10,11 @@
 	Date: April 22-2025
 	Description: Modification for Branch, AUIPC, JAL operations logic.
 */
+
+/* verilator lint_off WIDTHTRUNC */
+/* verilator lint_off WIDTHEXPAND */
+/* verilator lint_off UNUSEDSIGNAL */
+
 module smolALU(
     input logic [31:0] rs1,
     input logic [31:0] rs2_or_imm,
@@ -87,7 +92,7 @@ always_comb begin
             alu_out = rs1 == rs2_or_imm ? pc + rs2_or_imm : 32'd0; //beq
         end
         5'd15: begin
-            alu_out = rs1 != rs2_or_im ? pc + rs2_or_imm : 32'd0; //bne
+            alu_out = rs1 != rs2_or_imm ? pc + rs2_or_imm : 32'd0; //bne
         end
         5'd16: begin
             alu_out = (rs1 < rs2_or_imm) ^ (rs1[31] != rs2_or_imm[31]) ? pc + rs2_or_imm : 32'd0 ; //blt
@@ -99,7 +104,7 @@ always_comb begin
             alu_out = rs1 < rs2_or_imm ? pc + rs2_or_imm : 32'd0; //bltu
         end
         5'd19: begin
-            alu_out = rs1 >= rs2_or_imm ? pc + rs2_or_imm; //bgeu
+            alu_out = rs1 >= rs2_or_imm ? pc + rs2_or_imm : 32'd0; //bgeu
         end
          
         default: begin
