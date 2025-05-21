@@ -7,9 +7,13 @@ Description: SmolCore Instruction decoder and immediate generator
 Date: April 18-2025
 
 *****INSERT HERE YOUR CHANGES COMMENTS + DATE *****
-
+Date: May 21-2025
+Description: Fixed case logic after TB
 */
 
+/* verilator lint_off WIDTHTRUNC */
+/* verilator lint_off WIDTHEXPAND */
+/* verilator lint_off CASEOVERLAP */
 
 module smolInsDec(
     input logic [31:0] instr,
@@ -40,28 +44,30 @@ assign funct7 = instr[31:25];        // bit 30 differentiates e.g. add vs sub
 
 // 2) Ins Type selection
 logic [2:0] optype;
+logic [4:0] internal;
+assign internal = instr[6:2];
 always_comb begin
-case (instr[6:2])
+casez (internal)
 
-    (5'b00101 || 5'b01101): begin
+    5'b00101, 5'b01101: begin
                             optype = 3'b001; //U TYPE
                             end
 
-    (5'b00000 || 5'b00001 || 5'b00100 || 5'b00110 || 5'b11001): begin
+    5'b00000,5'b00001,5'b00100,5'b00110,5'b11001: begin
                                                                 optype = 3'b010; //I TYPE
                                                                 end
 
-    (5'b01000 || 5'b01001): begin
+    5'b01000,5'b01001: begin
                             optype = 3'b011; //S TYPE
                             end
 
-    (5'b01100 || 5'b01110 || 5'b01011 || 5'b10100): begin                                                                                                                      optype = 3'b100; //R TYPE
+    5'b01100,5'b01110,5'b01011,5'b10100: begin                                                                                                                      optype = 3'b100; //R TYPE
                                                     end
 
-                                                                                                                              (5'b11011): begin
+                                                                                                                              5'b11011: begin
                optype = 3'b101; //J TYPE
                end
-                                                                                                                              (5'b11000): begin
+                                                                                                                              5'b11000: begin
                optype = 3'b110; //B TYPE
                end
                                                                                                                                default: begin
@@ -73,7 +79,6 @@ end
 
 // IMMEDIATE GENERATOR + SHAMT GENERATOR IF I INSTRCTION                                                                                                                          
 always_comb begin 
-//imm = 32'h0000_0000;
 
 case (optype)
     3'b001: begin

@@ -3,11 +3,14 @@
 // A parameterizable instruction ROM with optional synchronous output.
 // SOURCE: CHATGPT KEKW
 //------------------------------------------------------------------------------
+/* verilator lint_off DECLFILENAME */
+/* verilator lint_off UNUSEDSIGNAL */
+
 module InstructionMemory #(
   parameter ADDR_WIDTH = 10,       // how many bits of word address (2^ADDR_WIDTH words)
   parameter DATA_WIDTH = 32,       // instruction width
   parameter MEM_FILE   = "program.hex", // initialization file (in hex)
-  parameter SYNC_READ  = 0         // 0 = async read, 1 = sync read
+  parameter SYNC_READ  = 1         // 0 = async read, 1 = sync read
 )(
   input  logic                    clk,        // only used if SYNC_READ=1
   input  logic [ADDR_WIDTH+1:0]  addr,       // full byte address: PC[ADDR_WIDTH+1:0]

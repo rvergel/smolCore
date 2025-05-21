@@ -5,6 +5,7 @@
 
     ****COMMENT YOUR CHANGES BELOW****
 */
+/* verilator lint_off UNUSEDSIGNAL */
 
 module smolMemory(
     input logic clk,
