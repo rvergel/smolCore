@@ -1,1 +1,1 @@
-![smolCore_Architecture](/smolCore2.png)
+![smolCore_Architecture](/smolCore(1).png)
